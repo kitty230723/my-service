@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투명한 조합 만들기 | 부동산조합 회계 컨설팅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #10b981;
+            --dark-green: #059669;
+            --light-green: #ecfdf5;
+            --gray-900: #111827;
+            --gray-100: #f3f4f6;
+            --gray-600: #4b5563;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: white;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .header-logo {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--green);
+            letter-spacing: -0.5px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: var(--green);
+        }
+
+        .header-cta {
+            background: var(--green);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .header-cta:hover {
+            background: var(--dark-green);
+        }
+
+        /* Hero */
+        .hero {
+            margin-top: 70px;
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.2;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content .highlight {
+            color: var(--green);
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .hero-cta-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--green);
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--green);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-green);
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, var(--light-green) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-radius: 16px;
+            padding: 60px;
+            text-align: center;
+            font-size: 120px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 60px 40px;
+            background: var(--light-green);
+            margin: 0 40px;
+            border-radius: 16px;
+            margin-bottom: 80px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--green);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        /* Why Section */
+        .why {
+            padding: 100px 40px;
+            background: var(--gray-100);
+        }
+
+        .why-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--gray-900);
+            margin-bottom: 60px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .why-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+
+        .why-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .why-card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .why-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+        }
+
+        .why-card p {
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* Solution */
+        .solution {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .solution-content h2 {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .solution-content > p {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .solution-features {
+            list-style: none;
+            margin: 40px 0;
+        }
+
+        .solution-features li {
+            font-size: 15px;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            padding-left: 40px;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .solution-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 900;
+            font-size: 20px;
+        }
+
+        .solution-image {
+            background: linear-gradient(135deg, var(--light-green) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-radius: 16px;
+            padding: 80px;
+            text-align: center;
+            font-size: 140px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 100px 40px;
+            background: var(--gray-100);
+        }
+
+        .pricing-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--green);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+        }
+
+        .pricing-card.featured:after {
+            content: "추천";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--green);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .pricing-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+
+        .pricing-card .price {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--green);
+            margin: 20px 0;
+        }
+
+        .pricing-card .period {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 30px;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .pricing-card ul li {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .pricing-card ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial-content {
+            background: var(--light-green);
+            padding: 60px 80px;
+            border-radius: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            color: var(--gray-900);
+            margin-bottom: 30px;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+
+        .testimonial-author {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 5px;
+        }
+
+        .testimonial-role {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* CTA Final */
+        .final-cta {
+            padding: 80px 40px;
+            background: var(--green);
+            color: white;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .final-cta h2 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .final-cta p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .final-cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--green);
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 40px;
+            background: var(--gray-900);
+            color: white;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            line-height: 2;
+        }
+
+        .footer-bottom {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 60px 20px;
+                margin-top: 100px;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .stats-grid,
+            .why-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: slideInUp 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-logo">✓ 투명조합</div>
+        <ul class="header-nav">
+            <li><a href="#why">왜 필요한가</a></li>
+            <li><a href="#solution">솔루션</a></li>
+            <li><a href="#pricing">가격</a></li>
+            <li><a href="#contact">문의</a></li>
+        </ul>
+        <a href="#contact" class="header-cta">무료 상담</a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1>조합원의 불신을 <span class="highlight">투명성</span>으로 바꾸세요</h1>
+            <p>복잡한 부동산조합 회계와 행정을 간단하게. 조합원 신뢰도 80% 향상 달성.</p>
+            <div class="hero-cta-buttons">
+                <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">지금 시작하기</button>
+                <button class="btn-secondary" onclick="document.getElementById('why').scrollIntoView({behavior: 'smooth'})">더 알아보기</button>
+            </div>
+        </div>
+        <div class="hero-image fade-in">
+            📊
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item fade-in">
+                <div class="stat-number">50%</div>
+                <div class="stat-label">민원 감소</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">80%</div>
+                <div class="stat-label">신뢰도 향상</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">40h</div>
+                <div class="stat-label">월 업무 절감</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">투명성 입증</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why -->
+    <section class="why" id="why">
+        <div class="why-content">
+            <h2 class="section-title">조합이 겪는 현실</h2>
+            <div class="why-grid">
+                <div class="why-card fade-in">
+                    <div class="why-card-icon">❌</div>
+                    <h3>조합원, 계속 묻고 싶어해요</h3>
+                    <p>"내 돈이 어디 가는 거예요?"<br>명확한 답변을 줄 수 없는 현실</p>
+                </div>
+                <div class="why-card fade-in">
+                    <div class="why-card-icon">😫</div>
+                    <h3>담당자는 과로 상태</h3>
+                    <p>회계, 서류, 민원까지.<br>한 명이 모든 것을 감당하기엔 너무 많아요</p>
+                </div>
+                <div class="why-card fade-in">
+                    <div class="why-card-icon">⚠️</div>
+                    <h3>신뢰는 계속 떨어져요</h3>
+                    <p>투명성이 부족하면 의심이 생기고,<br>의심은 분쟁을 만듭니다</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="solution">
+        <div class="solution-grid">
+            <div class="solution-content fade-in">
+                <h2>시스템이 해결합니다</h2>
+                <p>6년간의 부동산조합 경험을 바탕으로 만든 더존 기반 회계시스템</p>
+                
+                <ul class="solution-features">
+                    <li>월별 투명성 리포트 자동 생성</li>
+                    <li>조합원이 언제든 확인할 수 있는 온라인 포털</li>
+                    <li>회계 담당자 업무 40시간 이상 절감</li>
+                    <li>행정 서류 자동화로 실수 제거</li>
+                    <li>24/7 문제 해결 지원</li>
+                    <li>조합 신뢰도 객관적 증명</li>
+                </ul>
+            </div>
+            <div class="solution-image fade-in">
+                💡
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-content">
+            <h2 class="section-title">합리한 가격으로 시작하세요</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card fade-in">
+                    <h3>스타트</h3>
+                    <div class="price">300만</div>
+                    <div class="period">초기 구축</div>
+                    <ul>
+                        <li>회계 진단 & 설계</li>
+                        <li>더존 기초 설정</li>
+                        <li>엑셀 템플릿</li>
+                        <li>담당자 교육</li>
+                    </ul>
+                    <button class="btn-primary" onclick="alert('상담을 신청하시겠습니까?')">상담 신청</button>
+                </div>
+
+                <div class="pricing-card featured fade-in">
+                    <h3>스탠다드</h3>
+                    <div class="price">500<span style="font-size: 24px;">만</span></div>
+                    <div class="period">초기 구축 + 월 50만</div>
+                    <ul>
+                        <li>전체 시스템 구축</li>
+                        <li>월별 리포트 자동화</li>
+                        <li>분기별 감시 보고서</li>
+                        <li>우선 지원</li>
+                    </ul>
+                    <button class="btn-primary" onclick="alert('상담을 신청하시겠습니까?')">상담 신청</button>
+                </div>
+
+                <div class="pricing-card fade-in">
+                    <h3>프리미엄</h3>
+                    <div class="price">700<span style="font-size: 24px;">만</span></div>
+                    <div class="period">모든 것 + 월 100만</div>
+                    <ul>
+                        <li>전체 서비스 포함</li>
+                        <li>조합원 온라인 포털</li>
+                        <li>실시간 현황 조회</li>
+                        <li>VIP 지원</li>
+                    </ul>
+                    <button class="btn-primary" onclick="alert('상담을 신청하시겠습니까?')">상담 신청</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="testimonial fade-in">
+        <h2 class="section-title">실제 조합의 변화</h2>
+        <div class="testimonial-content">
+            <div class="testimonial-text">"조합원들의 의심이 확실히 줄었어요. 매월 투명성 리포트를 받아보니 신뢰도가 올라갔습니다. 무엇보다 담당자의 부담이 대폭 감소했어요."</div>
+            <div class="testimonial-author">김영미</div>
+            <div class="testimonial-role">안산 지역주택조합 임원</div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="contact">
+        <h2>투명한 조합을 만드는 첫 단계</h2>
+        <p>전문가와 무료 상담으로 현재 상황을 파악하고 맞춤 솔루션을 받아보세요</p>
+        <div class="final-cta-buttons">
+            <button class="btn-white">📞 전화 상담: 010-9475-2615</button>
+            <button class="btn-white">📧 이메일: mcjmjs23@daum.net</button>
+            <button class="btn-white">📋 무료 진단 신청</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-top">
+                <div class="footer-section">
+                    <h4>회사</h4>
+                    <p>부동산조합 투명성 관리 전문 컨설팅<br>안산시 상록구 항가울로 28</p>
+                </div>
+                <div class="footer-section">
+                    <h4>연락처</h4>
+                    <p>전화: 010-9475-2615<br>이메일: mcjmjs23@daum.net</p>
+                </div>
+                <div class="footer-section">
+                    <h4>서비스</h4>
+                    <p>회계 시스템 구축<br>투명성 리포트<br>온라인 포털</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 투명조합. 모든 권리 보유.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
